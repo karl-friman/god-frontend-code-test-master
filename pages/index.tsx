@@ -1,8 +1,8 @@
-import React from "react";
-import { Block, Button, Grid, useTheme, View, Row, Flex, Link } from "vcc-ui";
-import cars from "../public/api/cars.json";
-import { Car } from "../types";
-import Card from "../src/components/Card";
+import React from 'react';
+import { Block, Button, Grid, useTheme, View, Row, Flex, Link } from 'vcc-ui';
+import cars from '../public/api/cars.json';
+import { Car } from '../types';
+import Card from '../src/components/Card';
 
 export default function HomePage() {
   const theme = useTheme();
@@ -11,31 +11,34 @@ export default function HomePage() {
     <View
       extend={{
         background: theme.color.background.primary,
-        transition: "3s opacity ease-in",
-        paddingTop: "3rem",
-        padding: "2rem",
+        // transition: '3s opacity ease-in',
+        paddingTop: '3rem',
+        margin: '0',
+        display: 'flex',
+        flexDirection: 'column',
+        // overflow: 'hidden'
       }}
     >
       <Flex
         extend={{
-          flexDirection: "row",
+          flexDirection: 'row',
+          // flexWrap: 'wrap',
+
         }}
       >
         {cars.map((car: Car, index: number) => {
           return (
-            <div key={index}>
-              <Card {...car}></Card>
-            </div>
+              <Card key={index} {...car}></Card>
           );
         })}
       </Flex>
 
       <View
         spacing={2}
-        direction="row"
-        justifyContent="end"
+        direction='row'
+        justifyContent='end'
         extend={{
-          marginTop: "1rem",
+          marginTop: '1rem',
         }}
       >
         dots
