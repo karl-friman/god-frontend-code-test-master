@@ -1,26 +1,14 @@
 import React from "react";
-import {
-  useTheme,
-  View,
-  Flex,
-  IconButton,
-  Spacer,
-  TextInput,
-  Block,
-} from "vcc-ui";
+import { useTheme, View, Flex } from "vcc-ui";
 import cars from "../public/api/cars.json";
 import { Car } from "../types";
 import Card from "../src/components/Card";
 import { useState } from "react";
-
+import Filter from "../src/components/Filter";
+import Navigation from "../src/components/Navigation";
 export default function HomePage() {
   const theme = useTheme();
-  const loadPrev = (): void => {
-    alert("not implemented yet!");
-  };
-  const loadNext = (): void => {
-    alert("not implemented yet!");
-  };
+
   const [filter, setFilter] = useState("");
   return (
     <View
@@ -32,22 +20,7 @@ export default function HomePage() {
         margin: "0",
       }}
     >
-      <Block
-        extend={{
-          paddingLeft: "1rem",
-        }}
-      >
-        <TextInput
-          value={filter}
-          label="Filter by model"
-          onChange={(e) => {
-            setFilter(e.target.value);
-          }}
-          style={{
-            width: "12rem",
-          }}
-        />
-      </Block>
+      <Filter filter={filter} setFilter={setFilter} />
       <Flex
         extend={{
           overflow: "hidden",
@@ -59,35 +32,17 @@ export default function HomePage() {
           }}
         >
           {cars
-            .filter((f) => f.modelName.toLowerCase().includes(filter.toLowerCase()) || filter === "")
+            .filter(
+              (f) =>
+                f.modelName.toLowerCase().includes(filter.toLowerCase()) ||
+                filter === ""
+            )
             .map((car: Car, index: number) => {
               return <Card key={index} {...car}></Card>;
             })}
         </Flex>
-
-        <Flex
-          extend={{
-            flexDirection: "row",
-            padding: "1rem",
-            justifyContent: "end",
-            flex: "5",
-          }}
-        >
-          <IconButton
-            onClick={loadPrev}
-            aria-label="prev"
-            iconName="navigation-chevronback"
-            variant="outline"
-          />
-          <Spacer />
-          <IconButton
-            onClick={loadNext}
-            aria-label="next"
-            iconName="navigation-chevronforward"
-            variant="outline"
-          />
-        </Flex>
       </Flex>
+      <Navigation />
     </View>
   );
 }

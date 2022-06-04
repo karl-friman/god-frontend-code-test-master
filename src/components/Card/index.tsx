@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { Link, Block, Text, Flex, View, Spacer } from "vcc-ui";
+import { Block, Text, Flex, View } from "vcc-ui";
 import { Car } from "../../../types";
+import CarLinks from "../CarLinks";
 
 export default function Card(props: Car): JSX.Element {
   const { id, modelName, bodyType, modelType, imageUrl } = props;
@@ -10,16 +11,16 @@ export default function Card(props: Car): JSX.Element {
       extend={{
         padding: "1rem",
         "@media (min-width: 2850px)": {
-            width: "20%",
+          width: "20%",
         },
         "@media (min-width: 1400px)": {
-            width: "25%",
+          width: "25%",
         },
         "@media (min-width: 720px)": {
-            width: "50%",
+          width: "50%",
         },
         "@media (min-width: 500px)": {
-            width: "100%",
+          width: "100%",
         },
       }}
     >
@@ -36,7 +37,7 @@ export default function Card(props: Car): JSX.Element {
             flexDirection: "row",
             paddingBottom: "1.5rem",
             "@media (max-width: 720px)": {
-                flexDirection: "column",
+              flexDirection: "column",
             },
           }}
         >
@@ -57,45 +58,11 @@ export default function Card(props: Car): JSX.Element {
         style={{
           position: "relative",
           aspectRatio: "4/3",
-          // "@media (min-width: 2560px)": {
-          //   height: "500px",
-          // },
-          // "@media (min-width: 1920px)": {
-          //   height: "400px",
-          // },
-          // "@media (min-width: 1600px)": {
-          //   height: "300px",
-          // },
-          // "@media (min-width: 1080px)": {
-          //   height: "230px",
-          // },
         }}
       >
         <Image src={imageUrl} alt={modelName} layout="fill" quality={100} />
       </Block>
-
-      <Flex
-        extend={{
-          flexDirection: "row",
-          paddingTop: "2rem",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Link
-          href={"/learn/" + id}
-          arrow="right"
-        >
-          LEARN
-        </Link>
-        <Spacer />
-        <Link
-          href={"/shop/" + id}
-          arrow="right"
-        >
-          SHOP
-        </Link>
-      </Flex>
+      <CarLinks id={id} />
     </View>
   );
 }
