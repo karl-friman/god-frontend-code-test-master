@@ -35,10 +35,10 @@ export default function HomePage() {
   if (page === 0) {
     disabledButtons.previous = true;
   }
-  if (page >= cars.length / amountToDisplay()) {
+  if (page >= cars.length / amountToDisplay() - 1) {
     disabledButtons.next = true;
   }
-  const output = cars.slice(page, amountToDisplay()+1)
+  const output = cars.slice(amountToDisplay() * page);
 
   return (
     <View
@@ -68,6 +68,9 @@ export default function HomePage() {
                 filter === ""
             )
             .map((car: Car, index: number) => {
+              if (filter !== "") {
+                disabledButtons.next = true;
+              }
               return <Card key={index} {...car}></Card>;
             })}
         </Flex>
@@ -76,12 +79,17 @@ export default function HomePage() {
       <Block
         extend={{
           padding: "1rem",
+          margin: "3rem",
+          borderColor: "black",
+          borderWidth: "1px",
+          borderStyle: "solid",
+          background: theme.color.background.secondary,
         }}
       >
         <code>Window width: {JSON.stringify(width)}</code>,
-        <code> Amount of cars displayed: {amountToDisplay()}</code>,
-        <code> Page to display: {page}</code>
-        <code> Total amount of cars: {cars.length}</code>
+        <code> Cars per render: {amountToDisplay()}</code>,
+        <code> Page: {page}</code>
+        <code> Total cars: {cars.length}</code>
       </Block>
     </View>
   );

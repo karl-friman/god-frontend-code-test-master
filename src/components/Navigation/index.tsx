@@ -1,12 +1,22 @@
 import { Flex, Spacer, IconButton } from "vcc-ui";
 import { ButtonsDisabled } from "../../../types";
 
-export default function Navigation(props: {disabled: ButtonsDisabled, page:number, setPage: React.Dispatch<React.SetStateAction<number>>}): JSX.Element {
-  const loadPrev = (page:number, setPage: React.Dispatch<React.SetStateAction<number>>): void => {
-    setPage(page-1)
+export default function Navigation(props: {
+  disabled: ButtonsDisabled;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+}): JSX.Element {
+  const loadPrev = (
+    page: number,
+    setPage: React.Dispatch<React.SetStateAction<number>>
+  ): void => {
+    setPage(page - 1);
   };
-  const loadNext = (page:number, setPage: React.Dispatch<React.SetStateAction<number>>): void => {
-    setPage(page+1)
+  const loadNext = (
+    page: number,
+    setPage: React.Dispatch<React.SetStateAction<number>>
+  ): void => {
+    setPage(page + 1);
   };
   return (
     <Flex

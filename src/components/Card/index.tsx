@@ -3,7 +3,7 @@ import { Block, Text, Flex, View } from "vcc-ui";
 import { Car } from "../../../types";
 import CarLinks from "../CarLinks";
 
-export default function Card(props: Car): JSX.Element {
+export default function Card(props: Car,): JSX.Element {
   const { id, modelName, bodyType, modelType, imageUrl } = props;
 
   return (
