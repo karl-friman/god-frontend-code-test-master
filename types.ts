@@ -5,3 +5,8 @@ export interface Car {
   modelType: string;
   imageUrl: string;
 }
+
+export interface ButtonsDisabled {
+  previous: boolean;
+  next: boolean;
+}

@@ -1,7 +1,7 @@
 import { Block, TextInput } from "vcc-ui";
 
 export default function Filter(props: {
-  filter: any;
+  filter: string;
   setFilter: React.Dispatch<React.SetStateAction<string>>;
 }): JSX.Element {
   return (
