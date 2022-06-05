@@ -34,7 +34,7 @@ export default function Navigation(props: {
         variant="outline"
         disabled={props.disabled.previous}
       />
-      <Spacer />.
+      <Spacer />
       <IconButton
         onClick={() => loadNext(props.page, props.setPage)}
         aria-label="next"

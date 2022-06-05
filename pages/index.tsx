@@ -3,7 +3,7 @@ import { useTheme, View, Flex, Block } from "vcc-ui";
 import cars from "../public/api/cars.json";
 import { ButtonsDisabled, Car } from "../types";
 import Card from "../src/components/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Filter from "../src/components/Filter";
 import Navigation from "../src/components/Navigation";
 import useWindowSize from "../hooks/useWindowSize";
@@ -12,6 +12,7 @@ export default function HomePage() {
   const theme = useTheme();
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(0);
+  const [finalOutput, setFinalOutput] = useState<Car[]>(cars);
   const breakpoints = [500, 720, 1400, 2850];
   const { width } = useWindowSize();
 
@@ -39,6 +40,20 @@ export default function HomePage() {
     disabledButtons.next = true;
   }
   const output = cars.slice(amountToDisplay() * page);
+  
+  // useEffect(() => {
+    console.log(filter);
+    const newOut = finalOutput.filter(
+      (car) =>
+        car.modelName.toLowerCase().includes(filter.toLowerCase()) ||
+        filter === ""
+    );
+    if (finalOutput !== newOut) {
+      setFinalOutput(newOut)
+      console.log('change')
+      console.log(finalOutput);
+    }
+  // }, [filter, finalOutput]);
 
   return (
     <View
@@ -61,12 +76,7 @@ export default function HomePage() {
             flexDirection: "row",
           }}
         >
-          {output
-            .filter(
-              (f) =>
-                f.modelName.toLowerCase().includes(filter.toLowerCase()) ||
-                filter === ""
-            )
+          {finalOutput
             .map((car: Car, index: number) => {
               if (filter !== "") {
                 disabledButtons.next = true;
