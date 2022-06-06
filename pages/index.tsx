@@ -77,7 +77,6 @@ export default function HomePage() {
             flexDirection: 'row',
           }}
         >
-          {console.log(totalCars)}
           {output
             .filter(
               (car) =>
