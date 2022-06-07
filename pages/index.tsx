@@ -1,16 +1,16 @@
-import React from 'react';
-import { useTheme, View, Flex, Block } from 'vcc-ui';
-import cars from '../public/api/cars.json';
-import { ButtonsDisabled, Car } from '../types';
-import Card from '../src/components/Card';
-import { useState, useEffect } from 'react';
-import Filter from '../src/components/Filter';
-import Navigation from '../src/components/Navigation';
-import useWindowSize from '../hooks/useWindowSize';
+import React from "react";
+import { useTheme, View, Flex, Block } from "vcc-ui";
+import cars from "../public/api/cars.json";
+import { ButtonsDisabled, Car } from "../types";
+import Card from "../src/components/Card";
+import { useState, useEffect } from "react";
+import Filter from "../src/components/Filter";
+import Navigation from "../src/components/Navigation";
+import useWindowSize from "../hooks/useWindowSize";
 
 export default function HomePage() {
   const theme = useTheme();
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
   const [page, setPage] = useState(0);
   const [totalCars, setTotalCars] = useState(0);
   const [currentWidth, setCurrentWidth] = useState(0);
@@ -34,20 +34,25 @@ export default function HomePage() {
     next: false,
   };
 
-  if (page === 0) {
-    disabledButtons.previous = true;
+  let output = cars;
+
+  output = cars.slice(amountToDisplay() * page);
+  if (filter) {
+    output = cars
+      .filter(
+        (car) =>
+          car.modelName.toLowerCase().includes(filter.toLowerCase()) ||
+          filter === ""
+      )
+      .slice(amountToDisplay() * page);
   }
-  if (page >= cars.length / amountToDisplay() - 1) {
-    disabledButtons.next = true;
-  }
-  let output = cars.slice(amountToDisplay() * page);
 
   useEffect(() => {
     setTotalCars(
       output.filter(
         (car) =>
           car.modelName.toLowerCase().includes(filter.toLowerCase()) ||
-          filter === ''
+          filter === ""
       ).length
     );
     if (width !== currentWidth) {
@@ -56,37 +61,44 @@ export default function HomePage() {
     }
   }, [filter, output, currentWidth, width]);
 
+  if (page === 0) {
+    disabledButtons.previous = true;
+  }
+  if (amountToDisplay() === totalCars) {
+    disabledButtons.next = true;
+  }
+
   return (
     <View
       extend={{
         background: theme.color.background.primary,
-        paddingTop: '3rem',
-        paddingLeft: '3rem',
-        marginRight: '3rem',
-        margin: '0',
+        paddingTop: "3rem",
+        paddingLeft: "3rem",
+        marginRight: "3rem",
+        margin: "0",
       }}
     >
       <Filter filter={filter} setFilter={setFilter} />
       <Flex
         extend={{
-          overflow: 'hidden',
+          overflow: "hidden",
         }}
       >
         <Flex
           extend={{
-            flexDirection: 'row',
+            flexDirection: "row",
           }}
         >
           {output
             .filter(
               (car) =>
                 car.modelName.toLowerCase().includes(filter.toLowerCase()) ||
-                filter === ''
+                filter === ""
             )
             .map((car: Car, index: number) => {
-              if (filter !== '' && amountToDisplay() >= totalCars) {
-                disabledButtons.next = true;
-              }
+              // if (filter !== "" && amountToDisplay() >= totalCars) {
+              //   disabledButtons.next = true;
+              // }
               return <Card key={index} {...car}></Card>;
             })}
         </Flex>
@@ -94,11 +106,11 @@ export default function HomePage() {
       <Navigation disabled={disabledButtons} page={page} setPage={setPage} />
       <Block
         extend={{
-          padding: '1rem',
-          margin: '3rem',
-          borderColor: 'black',
-          borderWidth: '1px',
-          borderStyle: 'solid',
+          padding: "1rem",
+          margin: "3rem",
+          borderColor: "black",
+          borderWidth: "1px",
+          borderStyle: "solid",
           background: theme.color.background.secondary,
         }}
       >
