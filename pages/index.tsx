@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme, View, Flex, Block } from "vcc-ui";
+import { useTheme, View, Flex, Block, SelectInput } from "vcc-ui";
 import cars from "../public/api/cars.json";
 import { ButtonsDisabled, Car } from "../types";
 import Card from "../src/components/Card";
@@ -12,6 +12,7 @@ export default function HomePage() {
   const theme = useTheme();
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(0);
+  const [bodyType, setBodyType] = useState("");
   const [totalCars, setTotalCars] = useState(0);
   const [currentWidth, setCurrentWidth] = useState(0);
   const breakpoints = [500, 720, 960, 2850];
@@ -37,12 +38,23 @@ export default function HomePage() {
   let output = cars;
 
   output = cars.slice(amountToDisplay() * page);
+
   if (filter) {
     output = cars
       .filter(
         (car) =>
           car.modelName.toLowerCase().includes(filter.toLowerCase()) ||
           filter === ""
+      )
+      .slice(amountToDisplay() * page);
+  }
+
+  if (bodyType) {
+    output = cars
+      .filter(
+        (car) =>
+          car.bodyType.toLowerCase().includes(bodyType.toLowerCase()) ||
+          bodyType === ""
       )
       .slice(amountToDisplay() * page);
   }
@@ -78,7 +90,7 @@ export default function HomePage() {
         margin: "0",
       }}
     >
-      <Filter filter={filter} setFilter={setFilter} />
+      <Filter filter={filter} setFilter={setFilter} bodyType={bodyType} setBodyType={setBodyType}/>
       <Flex
         extend={{
           overflow: "hidden",
